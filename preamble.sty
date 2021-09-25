@@ -110,11 +110,14 @@
 
 % Biblatex Settings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage[style=numeric-comp, sorting=none, urldate=iso]{biblatex}
+\usepackage[style=ext-numeric-comp, sorting=none, urldate=iso, articlein=false]{biblatex}
 \DeclareLanguageMapping{japanese}{english}
 \DeclareFieldFormat{urldate}{#1\bibstring{urlseen}}
 \DefineBibliographyStrings{japanese}{urlseen={閲覧},}
 \DefineBibliographyStrings{japanese}{references={参考文献},}
+\DefineBibliographyStrings{japanese}{in={ },}
+\renewcommand{\intitlepunct}{ }
+% \renewbibmacro{in:}{}
 \AtEveryBibitem{\clearlist{language}}
 
 \DeclareSourcemap{
