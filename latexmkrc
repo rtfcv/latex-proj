@@ -22,6 +22,6 @@ $latex   =  "texliveonfly --compiler=uplatex  --arguments=\" $my_latex_args %O \
 $dvipdf  = 'dvipdfmx %O -o %D %S -z 0';
 
 #3 for platex, 4 for lualatex, 5 for xetex
-$pdf_mode = 3;
+$pdf_mode = 4;
 
 $postscript_mode = $dvi_mode = 0;

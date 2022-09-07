@@ -6,22 +6,30 @@
 % common parameters
 \def\my@papersize{a4paper} % Define papersize
 \def\my@language{japanese} % Define language
-\def\my@documentclass{jlreq} % actual documentclass to use
-\def\my@fontsize{9.5 pt} % fontsize
+% \def\my@documentclass{jlreq} % actual documentclass to use
+\def\my@documentclass{beamer} % actual documentclass to use
+\def\my@fontsize{17pt} % fontsize
 \def\my@draftmode{} % set this to draft for draft
-\def\my@options{article,japanese}
+\def\my@options{}
 
 
 \ifptex
   % FOR pLaTeX %%%%%%%%%%
-  \g@addto@macro\@classoptionslist{,\my@language,dvipdfmx}
-  \LoadClass[dvipdfmx,\my@papersize,\my@language,\my@draftmode,\my@options,fontsize=\my@fontsize]{\my@documentclass}
+  \DeclareOption*{\PassOptionsToClass{\CurrentOption,japanese,dvipdfmx}{\my@documentclass}}
+  \ProcessOptions\relax 
+  \g@addto@macro\@classoptionslist{,japanese,dvipdfmx}
 
-  % font settings
-  \RequirePackage[dvipdfmx]{hyperref}
-  \RequirePackage{pxjahyper}
+  \LoadClass[dvipdfmx,\my@papersize,\my@language,\my@draftmode,\my@options,\my@fontsize]{\my@documentclass}
+
+  \usepackage{bxdpx-beamer}% dvipdfmxなので必要
+  \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
+
+  % \RequirePackage[dvipdfmx]{hyperref}
+  \RequirePackage[dvipdfmx]{pxjahyper}
+
   \RequirePackage{amsmath,txfonts}
 
+  % font settings
   \RequirePackage[T1]{fontenc}
   \renewcommand{\rmdefault}{ptm}
 
@@ -34,13 +42,17 @@
 
 \else\ifluatex
   % FOR LuaLaTeX %%%%%%%%%%
-  \g@addto@macro\@classoptionslist{,\my@language,lualatex}
-  \LoadClass[lualatex,\my@papersize,\my@language,\my@draftmode,\my@options,fontsize=\my@fontsize]{\my@documentclass}
+  \DeclareOption*{\PassOptionsToClass{\CurrentOption,japanese,lualatex}{\my@documentclass}}
+  \ProcessOptions\relax 
+  \g@addto@macro\@classoptionslist{,japanese,lualatex}
+
+  \LoadClass[lualatex,\my@papersize,\my@language,\my@draftmode,\my@options,\my@fontsize]{\my@documentclass}
 
   % font settings
   \RequirePackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
   \RequirePackage{luatexja-fontspec}
   \RequirePackage{fontspec}
+  \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
 
   \setmainjfont[
     %Script=Default,
@@ -76,7 +88,11 @@
 
 
 % Optional Document Class Settings %
-\RequirePackage[left=23mm,right=23mm,top=25mm,bottom=25mm]{geometry} % 余白の設定
+\usetheme{Singapore}
+\usecolortheme{dove}
+\usefonttheme{professionalfonts}
+
+% \RequirePackage[left=23mm,right=23mm,top=25mm,bottom=25mm]{geometry} % 余白の設定
 
 % \setlength\floatsep{1 truemm}      % 図と図の間のスペース
 % \setlength\textfloatsep{2 truemm}  % 本文と図の間のスペース
