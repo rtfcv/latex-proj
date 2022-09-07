@@ -1,0 +1,42 @@
+% Document Classes are configured in another file
+\usepackage[japanese]{babel}
+
+\usepackage{ar}
+\usepackage{hyperref}
+\usepackage{mathtools}
+
+\usepackage{siunitx}
+% translations for SIUnitx
+\usepackage{translations}
+\NewTranslation{japanese}{to (numerical range)}{から}% Requires `translations.sty`
+
+
+
+
+% 参考文献の設定
+\usepackage[
+    style=ext-numeric-comp, % was style=ext-numeric-comp, in the older ver
+    sorting=none,
+    urldate=iso,
+    seconds=true,
+    articlein=false,
+    ]{biblatex-jamod}
+
+% remove 'In:' from bibliography
+\DefineBibliographyStrings{japanese}{in={ },}
+\renewcommand{\intitlepunct}{ }
+\JamodEmphHack
+
+% silence language field without deleting
+\DeclareListFormat{language}{}
+
+\DeclareSourcemap{
+  \maps[datatype=bibtex]{
+    % remove url from engries that are not typed misc
+    \map{
+      \pernottype{misc}\pernottype{online} % only if type is neither misc nor online
+      \step[fieldset=urldate, null] % delete field
+      \step[fieldset=url, null] % delete field
+    }
+  }
+}

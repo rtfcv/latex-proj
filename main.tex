@@ -1,17 +1,23 @@
-\input{preamble.sty}
+\documentclass{include/mydocument}
 
-% \geometry{left=15mm,right=15mm,top=15mm,bottom=20mm}
+\input{include/preamble.tex}      % The Usual Preamble
+\usepackage{include/cleveref-ja}  % Convenience settings for cleveref
+
+\addbibresource{mybib.bib} % これはここにないとintellisense的に不都合
 
 \title{タイトル}
 \author{著者}
-\date{}
+
+\date{\today}
 
 \begin{document}
+  \sisetup{group-separator = {,},}
+  \maketitle
 
-\maketitle
+  \input{src/10-introduction.tex}
 
-\input{section1/sub.tex}
-
-\printbibliography
-
+  {
+    \singlespacing
+    \printbibliography
+  }
 \end{document}
