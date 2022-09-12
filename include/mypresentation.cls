@@ -8,7 +8,7 @@
 \def\my@language{japanese} % Define language
 % \def\my@documentclass{jlreq} % actual documentclass to use
 \def\my@documentclass{beamer} % actual documentclass to use
-\def\my@fontsize{17pt} % fontsize
+\def\my@fontsize{12pt} % fontsize
 \def\my@draftmode{} % set this to draft for draft
 \def\my@options{}
 

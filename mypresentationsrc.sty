@@ -1,0 +1,21 @@
+\input{include/preamble.tex}      % The Usual Preamble
+\usepackage{include/cleveref-ja}  % Convenience settings for cleveref
+
+\addbibresource{mybib.bib} % これはここにないとintellisense的に不都合
+
+\title{プレゼンタイトル}
+\author{著者}
+
+\date{\today}
+
+\begin{document}
+  \sisetup{group-separator = {,},}
+  \maketitle
+
+  \input{src/20-presentations.tex}
+
+  \begin{frame}[allowframebreaks]
+    \AtNextBibliography{\LARGE}
+    \printbibliography
+  \end{frame}
+\end{document}
