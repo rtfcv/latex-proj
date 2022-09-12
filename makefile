@@ -1,2 +1,2 @@
-build/main.pdf: latexmkrc main.tex src/* include/*
-	latexmk main
+build/mydocument.pdf: latexmkrc mydocument.tex src/* include/*
+	latexmk mydocument.tex
