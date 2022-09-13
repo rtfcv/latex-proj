@@ -12,6 +12,7 @@
   }
 \end{frame}
 
+
 \begin{frame}
   \frametitle{フレーム2の題名}
   \begin{columns}
@@ -26,7 +27,61 @@
       \end{itemize}
     \end{column}
   \end{columns}
+
+  \transduration<1>{2}%
+  \transfade<1>%
+
   \note{
     ここにノート2を入力
   }
 \end{frame}
+
+
+\begin{frame}
+  \frametitle{フレーム3の題名}
+  \begin{columns}
+    \begin{column}{0.667\linewidth}
+      \includegraphics[width=\linewidth]{example-image}
+    \end{column}
+    \begin{column}{0.333\linewidth}
+      \begin{itemize}
+        \item ここにテキストを入力
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+  \onslide<2>{%
+    \begin{tikzpicture}[overlay,remember picture]
+      \pgftransformshift{\pgfpointanchor{current page}{center}}%
+      \node[%
+        rectangle,%
+        draw=black,%
+        ultra thick,%
+        fill=yellow,%
+        decoration=zigzag,%
+        decorate,%
+        font=\Huge,%
+        text width=0.6\textwidth,%
+        align=center,%
+        anchor=center,%
+      ] at (0,0) {
+        \begin{itemize}
+          \item ポップアップ
+        \end{itemize}
+      };
+    \end{tikzpicture}
+  }%
+
+  % transitions
+  % \transdissolve[duration=1]<1>
+  \transduration<1>{2}%
+  % \transboxout<2>%
+  % \transblindsvertical<2>%
+  \transwipe<2>[direction=270,duration=1]
+
+  % \transduration<2>{2}%
+
+\end{frame}
+\note{
+  ここにノート2を入力
+}

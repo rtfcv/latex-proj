@@ -15,7 +15,14 @@
 \ifptex
   % FOR pLaTeX %%%%%%%%%%
   \g@addto@macro\@classoptionslist{,\my@language,dvipdfmx}
-  \LoadClass[dvipdfmx,\my@papersize,\my@language,\my@draftmode,\my@options,fontsize=\my@fontsize]{\my@documentclass}
+  \LoadClass[%
+    dvipdfmx,%
+    \my@papersize,%
+    \my@language,%
+    \my@draftmode,%
+    \my@options,%
+    fontsize=\my@fontsize,%
+    ]{\my@documentclass}
 
   % font settings
   \RequirePackage[dvipdfmx]{hyperref}
@@ -35,7 +42,14 @@
 \else\ifluatex
   % FOR LuaLaTeX %%%%%%%%%%
   \g@addto@macro\@classoptionslist{,\my@language,lualatex}
-  \LoadClass[lualatex,\my@papersize,\my@language,\my@draftmode,\my@options,fontsize=\my@fontsize]{\my@documentclass}
+  \LoadClass[%
+    lualatex,%
+    \my@papersize,%
+    \my@language,%
+    \my@draftmode,%
+    \my@options,%
+    fontsize=\my@fontsize,%
+    ]{\my@documentclass}
 
   % font settings
   \RequirePackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
@@ -45,16 +59,16 @@
   \setmainjfont[
     %Script=Default,
     YokoFeatures={JFM=prop},
-    CharacterWidth=Proportional,
+    % CharacterWidth=Proportional,
     ItalicFont={BIZ UDPMincho},
     ItalicFeatures={FakeSlant=0.3},
     SlantedFeatures={FakeSlant=-0.3},
     AutoFakeBold=2,
-    Kerning=On,
+    % Kerning=On,
   ]{BIZ UDPMincho}
 
   \setmainfont[
-    CharacterWidth=Proportional,
+    % CharacterWidth=Proportional,
     Kerning=On,
     Ligatures={Rare,TeX}
   ]{TeX Gyre Termes}
@@ -62,12 +76,12 @@
   \setsansjfont[
     %Script=Default,
     YokoFeatures={JFM=prop},
-    CharacterWidth=Proportional,
+    % CharacterWidth=Proportional,
     ItalicFont={BIZ UDPGothic},
     ItalicFeatures={FakeSlant=0.3},
     SlantedFeatures={FakeSlant=-0.3},
     AutoFakeBold=2,
-    Kerning=On,
+    % Kerning=On,
   ]{BIZ UDPGothic}
 
 \else

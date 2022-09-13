@@ -15,11 +15,20 @@
 
 \ifptex
   % FOR pLaTeX %%%%%%%%%%
-  \DeclareOption*{\PassOptionsToClass{\CurrentOption,japanese,dvipdfmx}{\my@documentclass}}
+  \DeclareOption*{%
+    \PassOptionsToClass{\CurrentOption,japanese,dvipdfmx}{\my@documentclass}%
+  }
   \ProcessOptions\relax 
   \g@addto@macro\@classoptionslist{,japanese,dvipdfmx}
 
-  \LoadClass[dvipdfmx,\my@papersize,\my@language,\my@draftmode,\my@options,\my@fontsize]{\my@documentclass}
+  \LoadClass[
+    dvipdfmx,
+    \my@papersize,
+    \my@language,
+    \my@draftmode,
+    \my@options,
+    \my@fontsize,
+  ]{\my@documentclass}
 
   \usepackage{bxdpx-beamer}% dvipdfmxなので必要
   \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
@@ -42,8 +51,10 @@
 
 \else\ifluatex
   % FOR LuaLaTeX %%%%%%%%%%
-  \DeclareOption*{\PassOptionsToClass{\CurrentOption,japanese,lualatex}{\my@documentclass}}
-  \ProcessOptions\relax 
+  \DeclareOption*{%
+    \PassOptionsToClass{\CurrentOption,japanese,lualatex}{\my@documentclass}%
+  }
+  \ProcessOptions\relax
   \g@addto@macro\@classoptionslist{,japanese,lualatex}
 
   \LoadClass[lualatex,\my@papersize,\my@language,\my@draftmode,\my@options,\my@fontsize]{\my@documentclass}
@@ -52,17 +63,19 @@
   \RequirePackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
   \RequirePackage{luatexja-fontspec}
   \RequirePackage{fontspec}
-  \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
+
+  % 既定をゴシック体に
+  \renewcommand{\kanjifamilydefault}{\gtdefault}  
 
   \setmainjfont[
-    %Script=Default,
+    % Script=Default,
     YokoFeatures={JFM=prop},
-    CharacterWidth=Proportional,
+    % CharacterWidth=Proportional,
     ItalicFont={BIZ UDPMincho},
     ItalicFeatures={FakeSlant=0.3},
     SlantedFeatures={FakeSlant=-0.3},
     AutoFakeBold=2,
-    Kerning=On,
+    % Kerning=On,
   ]{BIZ UDPMincho}
 
   \setmainfont[
@@ -72,14 +85,14 @@
   ]{TeX Gyre Termes}
 
   \setsansjfont[
-    %Script=Default,
+    % Script=Default,
     YokoFeatures={JFM=prop},
-    CharacterWidth=Proportional,
+    % CharacterWidth=Proportional,
     ItalicFont={BIZ UDPGothic},
     ItalicFeatures={FakeSlant=0.3},
     SlantedFeatures={FakeSlant=-0.3},
     AutoFakeBold=2,
-    Kerning=On,
+    % Kerning=On,
   ]{BIZ UDPGothic}
 
 \else
