@@ -7,6 +7,7 @@
     \item \textcite{_incollection}
     \item \textcite{_inproceedings,_misc,_techreport}
   \end{itemize}
+
   \note{
     ここにノートを入力
   }
@@ -70,7 +71,92 @@
         \end{itemize}
       };
     \end{tikzpicture}
-  }%
+  }
+
+  % transitions
+  % \transdissolve[duration=1]<1>
+  \transduration<1>{3}%
+  % \transboxout<2>%
+  % \transblindsvertical<2>%
+  \transwipe<2>[direction=270,duration=1]
+
+  % \transduration<2>{2}%
+  \note<1>{
+    ここにノート2を入力
+  }
+  \note<2>{
+    ここにノート2を入力
+  }
+\end{frame}
+
+
+\begin{frame}[fragile]
+
+  \begin{easylist}[itemize]
+    @ hoge
+    @@ fuga
+    @@@ boke
+  \end{easylist}
+
+  \note{some stupid notes}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{フレーム5の題名}
+
+  \begin{columns}
+    \begin{column}{0.667\linewidth}
+    \tikz[remember picture] \node[] (fig1) {\includegraphics[width=\linewidth]{example-image}};
+    \end{column}
+    \begin{column}{0.333\linewidth}
+      \begin{itemize}
+        \item ここにテキストを入力
+      \end{itemize}
+    \end{column}
+  \end{columns}
+
+  \onslide<2>{%
+    \begin{tikzpicture}[overlay,remember picture]
+      \coordinate[left=1em] (node0) at (fig1.east);
+      \node[%
+        rectangle,%
+        draw=black,%
+        fill=green,
+        ultra thick,%
+        text width=0.3\linewidth,%
+        right=0.4\linewidth,
+        ] (node1) at (fig1) {%
+          ポップアップ%
+        };
+        \draw[->,green] (node1.west)--(node0);
+    \end{tikzpicture}
+  }
+
+  \onslide<3>{%
+    \begin{tikzpicture}[overlay,remember picture]
+      \node[%
+        rectangle callout,%
+        draw=black,%
+        fill=white,
+        ultra thick,%
+        right=0.4\linewidth,%
+        above=5em,%
+        text width=0.4\linewidth,rounded corners=2pt,%
+        callout absolute pointer=(node0),%
+        ] (node2) at (fig1) {%
+          ポップアップ%
+        };
+    \end{tikzpicture}
+  }
+
+  \iffalse
+      fill=yellow,%
+      decoration=zigzag,%
+      decorate,%
+      align=center,%
+      anchor=center,%
+  \fi
 
   % transitions
   % \transdissolve[duration=1]<1>
@@ -80,8 +166,10 @@
   \transwipe<2>[direction=270,duration=1]
 
   % \transduration<2>{2}%
-
+  \note<1>{
+    ここにノート2を入力
+  }
+  \note<2>{
+    ここにノート2を入力
+  }
 \end{frame}
-\note{
-  ここにノート2を入力
-}

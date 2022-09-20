@@ -1,8 +1,14 @@
 \input{include/preamble.tex}      % The Usual Preamble
 \usepackage{include/cleveref-ja}  % Convenience settings for cleveref
+\usepackage[at]{easylist}
 
 \usepackage{tikz}
-\usetikzlibrary{shapes.callouts,shapes,decorations.pathmorphing,tikzmark}
+\usetikzlibrary{
+  % shapes.callouts,
+  shapes,
+  decorations.pathmorphing,
+  tikzmark
+}
 % \addtobeamertemplate{background canvas}{\transwipe[duration=0.3]}{}
 
 \addbibresource{mybib.bib} % これはここにないとintellisense的に不都合
@@ -19,7 +25,7 @@
   \input{src/20-presentations.tex}
 
   \begin{frame}[allowframebreaks]
-    \AtNextBibliography{\LARGE}
+    \AtNextBibliography{\large}
     \printbibliography
   \end{frame}
 \end{document}
