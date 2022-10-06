@@ -125,9 +125,9 @@
   %   BoldFont={mplus-2m-bold},
   % ]{mplus-2m-regular}
   \setmonofont[
-  ]{M PLUS 1 Code}
+  ]{Noto Sans Mono}
   \setmonojfont[
-  ]{M PLUS 1 Code}
+  ]{Noto Sans Mono CJK JP}
 
 \else
   \errmessage{You Need either (u)pLaTeX or LuaLaTeX}
