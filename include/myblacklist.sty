@@ -1,0 +1,19 @@
+\RequirePackage{expl3}
+
+\ExplSyntaxOn
+\msg_new:nnnn {myblacklist} {badPackage}
+{
+Bad~Package~'#1' \\
+I~don't~think~I~want~to~load~'#1'.
+}
+{is this part even visible?}
+
+\DeclareRobustCommand{\my@chkpkg}[1]{
+    \@ifpackageloaded{#1}{%
+        \msg_error:nnn {myblacklist} {badPackage} {#1}%
+    }{}
+}
+\ExplSyntaxOff
+
+\my@chkpkg{lipsum}
+\my@chkpkg{tikz}
