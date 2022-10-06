@@ -6,7 +6,6 @@
 % common parameters
 \def\my@papersize{a4paper} % Define papersize
 \def\my@language{japanese} % Define language
-% \def\my@documentclass{jlreq} % actual documentclass to use
 \def\my@documentclass{beamer} % actual documentclass to use
 \def\my@fontsize{12pt} % fontsize
 \def\my@draftmode{} % set this to draft for draft
@@ -15,22 +14,31 @@
 
 \ifptex
   % FOR pLaTeX %%%%%%%%%%
+
   \DeclareOption*{%
-    \PassOptionsToClass{\CurrentOption,japanese,dvipdfmx}{\my@documentclass}%
+    \edef\@clsopts{{dvipdfmx,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}}
+    \expandafter\PassOptionsToClass\@clsopts
   }
-  \ProcessOptions\relax 
-  \g@addto@macro\@classoptionslist{,japanese,dvipdfmx}
+  \ProcessOptions\relax
 
-  \LoadClass[
-    dvipdfmx,
-    \my@papersize,
-    \my@language,
-    \my@draftmode,
-    \my@options,
-    \my@fontsize,
-  ]{\my@documentclass}
+  \edef\@tmp{{\@clsopts}}
+  \expandafter\newcommand\expandafter\showclsopts\@tmp
 
-  \usepackage{bxdpx-beamer}% dvipdfmxなので必要
+  \edef\@ClassOptionsToAppend{{,\my@language,dvipdfmx}}
+  \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
+
+
+  \LoadClass[%
+    dvipdfmx,%
+    \my@papersize,%
+    \my@language,%
+    \my@draftmode,%
+    \my@options,%
+    \my@fontsize,%
+    ]{\my@documentclass}
+
+  % \RequirePackage[dvipdfmx]{graphicx}
+  \RequirePackage{bxdpx-beamer}% dvipdfmxなので必要
   \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
 
   % \RequirePackage[dvipdfmx]{hyperref}
@@ -50,22 +58,39 @@
 
 
 \else\ifluatex
+  % turn compression off for pdfs
+  \RequirePackage{expl3}
+  \ExplSyntaxOn
+  \pdf_uncompress:
+  \ExplSyntaxOff
+
   % FOR LuaLaTeX %%%%%%%%%%
   \DeclareOption*{%
-    \PassOptionsToClass{\CurrentOption,japanese,lualatex}{\my@documentclass}%
+    \edef\@clsopts{{lualatex,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}}
+    \expandafter\PassOptionsToClass\@clsopts
   }
   \ProcessOptions\relax
-  \g@addto@macro\@classoptionslist{,japanese,lualatex}
 
-  \LoadClass[lualatex,\my@papersize,\my@language,\my@draftmode,\my@options,\my@fontsize]{\my@documentclass}
+  \edef\@ClassOptionsToAppend{{,\my@language,lualatex}}
+  \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
+
+  \edef\@tmp{{\@classoptionslist}}
+  \expandafter\newcommand\expandafter\showclsopts\@tmp
+
+  \LoadClass[%
+    lualatex,%
+    \my@papersize,%
+    \my@language,%
+    \my@draftmode,%
+    \my@options,%
+    \my@fontsize,%
+    ]{\my@documentclass}
 
   % font settings
   \RequirePackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
   \RequirePackage{luatexja-fontspec}
   \RequirePackage{fontspec}
-
-  % 既定をゴシック体に
-  \renewcommand{\kanjifamilydefault}{\gtdefault}  
+  \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
 
   \setmainjfont[
     % Script=Default,
@@ -79,15 +104,15 @@
   ]{BIZ UDPMincho}
 
   \setmainfont[
-    CharacterWidth=Proportional,
+    % CharacterWidth=Proportional,
     Kerning=On,
     Ligatures={Rare,TeX}
   ]{TeX Gyre Termes}
 
   \setsansjfont[
-    % Script=Default,
+    %Script=Default,
     YokoFeatures={JFM=prop},
-    % CharacterWidth=Proportional,
+    CharacterWidth=Proportional,
     ItalicFont={BIZ UDPGothic},
     ItalicFeatures={FakeSlant=0.3},
     SlantedFeatures={FakeSlant=-0.3},
@@ -95,28 +120,67 @@
     % Kerning=On,
   ]{BIZ UDPGothic}
 
+  \setmonofont[
+    %Script=Default,
+    BoldFont={mplus-2m-bold},
+  ]{mplus-2m-regular}
+  \setmonojfont[
+    %Script=Default,
+    BoldFont={mplus-2m-bold},
+  ]{mplus-2m-regular}
+
 \else
   \errmessage{You Need either (u)pLaTeX or LuaLaTeX}
 \fi\fi
+
+\newcommand\myclassopt{\@classoptionslist}
+\newcommand\mycurrentopt{\CurrentOption}
 
 
 % Optional Document Class Settings %
 \usetheme{Singapore}
 \usecolortheme{dove}
 \usefonttheme{professionalfonts}
+% \useoutertheme{infolines}
+\setbeamertemplate{footline}[text line]{%
+  \parbox{\linewidth}{%
+    \vskip-1.5em \insertframenumber~of~\inserttotalframenumber%
+    ~-~\insertshortauthor\hfill%
+    }%
+}
+
+\setbeamertemplate{note page}{
+\footnotesize
+  \begin{tabular}{lc}
+    \begin{minipage}{0.85\linewidth}
+      \scriptsize
+      \centering
+      \insertsection~/~\insertsubsection~/~\insertframetitle
+    \end{minipage}
+    &
+    \begin{minipage}{0.15\linewidth}
+      \setlength{\fboxsep}{0pt}
+      \fbox{\insertslideintonotes{0.1}}
+    \end{minipage}
+    \\
+    \hline
+\end{tabular}
+  \vfill\insertnote\vfill
+}
+% \setbeamertemplate{note page}[compress]
+\setbeamertemplate{itemize item}[triangle]
+\setbeamertemplate{itemize subitem}[square]
+\setbeamertemplate{itemize subsubitem}[circle]
 
 % \RequirePackage[left=23mm,right=23mm,top=25mm,bottom=25mm]{geometry} % 余白の設定
-
 % \setlength\floatsep{1 truemm}      % 図と図の間のスペース
 % \setlength\textfloatsep{2 truemm}  % 本文と図の間のスペース
 % \setlength\intextsep{1 truemm}     % 本文中の図のスペース
-
 % \setlength\abovecaptionskip{1 truemm}  % 図とキャプションの間のスペース
 % \setlength\belowcaptionskip{2 truemm}
-
 % \setlength{\abovedisplayskip}{0.1 \abovedisplayskip}
 % \setlength{\belowdisplayskip}{0.1 \belowdisplayskip}
 
 % % for jlreq
-\RequirePackage{setspace}
-\singlespacing
+% \RequirePackage{setspace}
+% \singlespacing
