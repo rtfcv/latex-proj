@@ -16,14 +16,13 @@
   % FOR pLaTeX %%%%%%%%%%
 
   \DeclareOption*{%
-    \edef\@clsopts{{dvipdfmx,%
-                    \my@language,%
-                    \my@fontsize,%
-                    \my@papersize,%
-                    \CurrentOption}{\my@documentclass}}
+    \edef\@clsopts{{dvipdfmx,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}}
     \expandafter\PassOptionsToClass\@clsopts
   }
-  \ProcessOptions\relax 
+  \ProcessOptions\relax
+
+  \edef\@tmp{{\@clsopts}}
+  \expandafter\newcommand\expandafter\showclsopts\@tmp
 
   \edef\@ClassOptionsToAppend{{,\my@language,dvipdfmx}}
   \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
@@ -59,13 +58,24 @@
 
 
 \else\ifluatex
+  % turn compression off for pdfs
+  \RequirePackage{expl3}
+  \ExplSyntaxOn
+  \pdf_uncompress:
+  \ExplSyntaxOff
+
   % FOR LuaLaTeX %%%%%%%%%%
   \DeclareOption*{%
-    \PassOptionsToClass{\CurrentOption,japanese,lualatex}{\my@documentclass}%
-    }
+    \edef\@clsopts{{lualatex,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}}
+    \expandafter\PassOptionsToClass\@clsopts
+  }
   \ProcessOptions\relax
-  \edef\@ClassOptionsToAppend{,\my@language,lualatex}
-  \g@addto@macro\@classoptionslist{\@ClassOptionsToAppend}
+
+  \edef\@ClassOptionsToAppend{{,\my@language,lualatex}}
+  \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
+
+  \edef\@tmp{{\@classoptionslist}}
+  \expandafter\newcommand\expandafter\showclsopts\@tmp
 
   \LoadClass[%
     lualatex,%
@@ -110,6 +120,15 @@
     % Kerning=On,
   ]{BIZ UDPGothic}
 
+  \setmonofont[
+    %Script=Default,
+    BoldFont={mplus-2m-bold},
+  ]{mplus-2m-regular}
+  \setmonojfont[
+    %Script=Default,
+    BoldFont={mplus-2m-bold},
+  ]{mplus-2m-regular}
+
 \else
   \errmessage{You Need either (u)pLaTeX or LuaLaTeX}
 \fi\fi
@@ -131,14 +150,15 @@
 }
 
 \setbeamertemplate{note page}{
-\tiny
+\footnotesize
   \begin{tabular}{lc}
-    \begin{minipage}{0.7\linewidth}
-      \tiny
-      \insertsection / \insertsubsection / \insertframetitle
+    \begin{minipage}{0.85\linewidth}
+      \scriptsize
+      \centering
+      \insertsection~/~\insertsubsection~/~\insertframetitle
     \end{minipage}
     &
-    \begin{minipage}{0.12\linewidth}
+    \begin{minipage}{0.15\linewidth}
       \setlength{\fboxsep}{0pt}
       \fbox{\insertslideintonotes{0.1}}
     \end{minipage}
@@ -148,6 +168,9 @@
   \vfill\insertnote\vfill
 }
 % \setbeamertemplate{note page}[compress]
+\setbeamertemplate{itemize item}[triangle]
+\setbeamertemplate{itemize subitem}[square]
+\setbeamertemplate{itemize subsubitem}[circle]
 
 % \RequirePackage[left=23mm,right=23mm,top=25mm,bottom=25mm]{geometry} % 余白の設定
 % \setlength\floatsep{1 truemm}      % 図と図の間のスペース
@@ -159,5 +182,5 @@
 % \setlength{\belowdisplayskip}{0.1 \belowdisplayskip}
 
 % % for jlreq
-\RequirePackage{setspace}
-\singlespacing
+% \RequirePackage{setspace}
+% \singlespacing
