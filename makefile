@@ -1,12 +1,24 @@
-all: build/mypresentation_notes.pdf build/mydocument.pdf
+ifeq ($(OS),Windows_NT)
+    COPY := powershell -NoProfile -Command cp
+else
+    COPY := cp
+endif
 
-mypresentation: build/mypresentation_notes.pdf build/mypresentation.pdf
+.PHONY: help
+help:
+	$(info usage:)
+	$(info make mydocument)
+	$(info make mypresentation)
+	$(info make all)
 
-build/mydocument.pdf: latexmkrc mydocument.tex src/* include/*
-	latexmk mydocument.tex
+mydocument: pdf/mydocument.pdf
 
-build/mypresentation.pdf: latexmkrc mypresentation.tex mypresentationsrc.sty src/* include/*
-	latexmk mypresentation.tex
+mypresentation: pdf/mypresentation_notes.pdf pdf/mypresentation.pdf
 
-build/mypresentation_notes.pdf: latexmkrc mypresentation_notes.tex mypresentationsrc.sty src/* include/*
-	latexmk mypresentation_notes.tex
+pdf/%.pdf: build/%.pdf
+	$(COPY) $< $@
+
+build/%.pdf: %.tex latexmkrc src/* include/*
+	latexmk $<
+
+all: mydocument mypresentation
