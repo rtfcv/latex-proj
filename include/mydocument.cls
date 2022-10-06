@@ -116,14 +116,18 @@
   ]{BIZ UDPGothic}
 
 
+  % \setmonofont[
+  %   %Script=Default,
+  %   BoldFont={mplus-2m-bold},
+  % ]{mplus-2m-regular}
+  % \setmonojfont[
+  %   %Script=Default,
+  %   BoldFont={mplus-2m-bold},
+  % ]{mplus-2m-regular}
   \setmonofont[
-    %Script=Default,
-    BoldFont={mplus-2m-bold},
-  ]{mplus-2m-regular}
+  ]{M PLUS 1 Code}
   \setmonojfont[
-    %Script=Default,
-    BoldFont={mplus-2m-bold},
-  ]{mplus-2m-regular}
+  ]{M PLUS 1 Code}
 
 \else
   \errmessage{You Need either (u)pLaTeX or LuaLaTeX}
@@ -132,7 +136,7 @@
 
 % Optional Document Class Settings %
 \setlength\marginparwidth{20truemm}     % 本文中の図のスペース
-\RequirePackage[left=1.2\marginparwidth,right=1.2\marginparwidth,top=25mm,bottom=25mm]{geometry} % 余白の設定
+\RequirePackage[left=1.2\marginparwidth,right=1.2\marginparwidth,top=1.25\marginparwidth,bottom=1.25\marginparwidth]{geometry} % 余白の設定
 
 % \setlength\floatsep{1 truemm}      % 図と図の間のスペース
 % \setlength\textfloatsep{2 truemm}  % 本文と図の間のスペース

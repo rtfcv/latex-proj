@@ -120,14 +120,18 @@
     % Kerning=On,
   ]{BIZ UDPGothic}
 
+  % \setmonofont[
+  %   %Script=Default,
+  %   BoldFont={mplus-2m-bold},
+  % ]{mplus-2m-regular}
+  % \setmonojfont[
+  %   %Script=Default,
+  %   BoldFont={mplus-2m-bold},
+  % ]{mplus-2m-regular}
   \setmonofont[
-    %Script=Default,
-    BoldFont={mplus-2m-bold},
-  ]{mplus-2m-regular}
+  ]{M PLUS 1 Code}
   \setmonojfont[
-    %Script=Default,
-    BoldFont={mplus-2m-bold},
-  ]{mplus-2m-regular}
+  ]{M PLUS 1 Code}
 
 \else
   \errmessage{You Need either (u)pLaTeX or LuaLaTeX}
