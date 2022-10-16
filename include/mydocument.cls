@@ -13,20 +13,23 @@
 % \def\my@options{article,japanese}
 \def\my@options{japanese}
 
+\DeclareRobustCommand{\PrepareGlobalOptions}[1]{
+  \DeclareOption*{%
+    \edef\@clsopts{%
+      {#1,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}%
+      }%
+    \expandafter\PassOptionsToClass\@clsopts%
+  }
+  \ProcessOptions\relax
+
+  \edef\@ClassOptionsToAppend{{,\my@language,#1}}
+  \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
+  }
 
 % actual configurations
 \ifptex
   % FOR pLaTeX %%%%%%%%%%
-  \DeclareOption*{%
-    \edef\@clsopts{%
-      {dvipdfmx,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}%
-      }
-    \expandafter\PassOptionsToClass\@clsopts
-  }
-  \ProcessOptions\relax
-
-  \edef\@ClassOptionsToAppend{{,\my@language,dvipdfmx}}
-  \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
+  \PrepareGlobalOptions{dvipdfmx}
 
   % actually load the class
   \LoadClass[%
@@ -41,36 +44,12 @@
   % font settings
   \RequirePackage[dvipdfmx]{hyperref}
   \RequirePackage{pxjahyper}
-  \RequirePackage{amsmath,txfonts}
-
-  \RequirePackage[T1]{fontenc}
-  \renewcommand{\rmdefault}{ptm}
-
-  \usepackage[uplatex,deluxe]{otf}
-  \usepackage[haranoaji,unicode]{pxchfon}
-  \setminchofont{BIZ_UDMincho_Regular.5.ttf}
-  \setgothicfont{BIZ_UDGothic_Regular.5.ttf}
-  \setboldgothicfont{BIZ_UDGothic_Bold.5.ttf}
-
+  \RequirePackage{mathtools}
 
 \else\ifluatex
-  % \RequirePackage{expl3}
-  % \ExplSyntaxOn
-  % \pdf_uncompress:
-  % \ExplSyntaxOff
-  % \def\my@documentclass{ltjsarticle} % actual documentclass to use
   % FOR LuaLaTeX %%%%%%%%%%
   % process global options
-  \DeclareOption*{%
-    \edef\@clsopts{%
-      {lualatex,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}%
-      }
-    \expandafter\PassOptionsToClass\@clsopts
-  }
-  \ProcessOptions\relax
-
-  \edef\@ClassOptionsToAppend{{,\my@language,lualatex}}
-  \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
+  \PrepareGlobalOptions{lualatex}
 
   % actually load the class
   \LoadClass[%
@@ -81,53 +60,6 @@
     \my@options,%
     fontsize=\my@fontsize,%
     ]{\my@documentclass}
-
-  % font settings
-  \RequirePackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
-  \RequirePackage{luatexja-fontspec}
-  \RequirePackage{fontspec}
-
-  \setmainjfont[
-    %Script=Default,
-    YokoFeatures={JFM=prop},
-    % CharacterWidth=Proportional,
-    ItalicFont={BIZ UDPMincho},
-    ItalicFeatures={FakeSlant=0.3},
-    SlantedFeatures={FakeSlant=-0.3},
-    AutoFakeBold=2,
-    %Kerning=On,
-  ]{BIZ UDPMincho}
-
-  \setmainfont[
-    % CharacterWidth=Proportional,
-    Kerning=On,
-    Ligatures={Rare,TeX}
-  ]{TeX Gyre Termes}
-
-  \setsansjfont[
-    %Script=Default,
-    YokoFeatures={JFM=prop},
-    % CharacterWidth=Proportional,
-    ItalicFont={BIZ UDPGothic},
-    ItalicFeatures={FakeSlant=0.3},
-    SlantedFeatures={FakeSlant=-0.3},
-    AutoFakeBold=1,
-    % Kerning=On,
-  ]{BIZ UDPGothic}
-
-
-  % \setmonofont[
-  %   %Script=Default,
-  %   BoldFont={mplus-2m-bold},
-  % ]{mplus-2m-regular}
-  % \setmonojfont[
-  %   %Script=Default,
-  %   BoldFont={mplus-2m-bold},
-  % ]{mplus-2m-regular}
-  \setmonofont[
-  ]{Noto Sans Mono}
-  \setmonojfont[
-  ]{Noto Sans Mono CJK JP}
 
 \else
   \errmessage{You Need either (u)pLaTeX or LuaLaTeX}

@@ -1,0 +1,77 @@
+\RequirePackage{iftex}
+\ifluatex
+  \RequirePackage[match]{luatexja-fontspec}
+  \RequirePackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
+  \RequirePackage{fontspec}
+
+  \newcommand{\helpmesetmainjfont}[1]{%
+    \setmainjfont[%
+      %Script=Default,%
+      YokoFeatures={JFM=prop},%
+      % CharacterWidth=Proportional,%
+      ItalicFont={#1},%
+      ItalicFeatures={FakeSlant=0.3},%
+      SlantedFeatures={FakeSlant=-0.3},%
+      AutoFakeBold=2,%
+      Ligatures={Rare,TeX}%
+      %Kerning=On,%
+    ]{#1}%
+    }
+
+  \newcommand{\helpmesetsansjfont}[1]{
+    \setsansjfont[%
+      %Script=Default,%
+      YokoFeatures={JFM=prop},%
+      % CharacterWidth=Proportional,%
+      ItalicFont={#1},%
+      ItalicFeatures={FakeSlant=0.3},%
+      SlantedFeatures={FakeSlant=-0.3},%
+      AutoFakeBold=2,%
+      Ligatures={Rare,TeX}%
+      %Kerning=On,%
+    ]{#1}%
+    }
+
+  \newcommand{\helpmesetmainfont}[1]{%
+    \setmainfont[%
+      % CharacterWidth=Proportional,%
+      Kerning=On,%
+      Ligatures={Rare,TeX}%
+    ]{#1}%
+    }
+  \newcommand{\helpmesetsansfont}[1]{%
+    \setsansfont[%
+      % CharacterWidth=Proportional,%
+      Kerning=On,%
+      Ligatures={Rare,TeX}%
+    ]{#1}%
+    }
+\else
+  \ifuptex
+    \RequirePackage[T1]{fontenc}
+    \usepackage[jis2004,uplatex,deluxe]{otf}
+    \usepackage[jis2004,haranoaji,unicode]{pxchfon}
+  \else
+    \UseUptexOrLualatex
+  \fi
+\fi
+
+
+% Default Settings for Fonts
+\ifluatex
+  \helpmesetmainfont{Tex Gyre Termes}
+
+  \helpmesetmainjfont{BIZ UDPMincho}%
+  \helpmesetsansjfont{BIZ UDPGothic}%
+
+  \setmonofont{UDEV Gothic LG}
+  \setmonojfont{UDEV Gothic LG} % articleだとなぜか反映されない
+\fi
+
+\ifuptex
+  \renewcommand{\rmdefault}{ptm}%
+  \usepackage{inconsolata}%
+  \setminchofont{BIZUDMincho-Regular.ttf}%
+  \setgothicfont{BIZUDGothic-Regular.ttf}%
+  \setboldgothicfont{BIZUDGothic-Bold.ttf}%
+\fi
