@@ -11,23 +11,25 @@
 \def\my@draftmode{} % set this to draft for draft
 \def\my@options{}
 
-
-\ifptex
-  % FOR pLaTeX %%%%%%%%%%
-
+\DeclareRobustCommand{\PrepareGlobalOptions}[1]{
   \DeclareOption*{%
-    \edef\@clsopts{{dvipdfmx,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}}
-    \expandafter\PassOptionsToClass\@clsopts
+    \edef\@clsopts{%
+      {#1,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}%
+      }%
+    \expandafter\PassOptionsToClass\@clsopts%
   }
   \ProcessOptions\relax
 
-  \edef\@tmp{{\@clsopts}}
-  \expandafter\newcommand\expandafter\showclsopts\@tmp
-
-  \edef\@ClassOptionsToAppend{{,\my@language,dvipdfmx}}
+  \edef\@ClassOptionsToAppend{{,\my@language,#1}}
   \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
+  }
 
+% actual configurations
+\ifptex
+  % FOR pLaTeX %%%%%%%%%%
+  \PrepareGlobalOptions{dvipdfmx}
 
+  % actually load the class
   \LoadClass[%
     dvipdfmx,%
     \my@papersize,%
@@ -37,46 +39,19 @@
     \my@fontsize,%
     ]{\my@documentclass}
 
-  % \RequirePackage[dvipdfmx]{graphicx}
   \RequirePackage{bxdpx-beamer}% dvipdfmxなので必要
   \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
 
-  % \RequirePackage[dvipdfmx]{hyperref}
   \RequirePackage[dvipdfmx]{pxjahyper}
 
-  \RequirePackage{amsmath,txfonts}
-
-  % font settings
-  \RequirePackage[T1]{fontenc}
-  \renewcommand{\rmdefault}{ptm}
-
-  \usepackage[uplatex,deluxe]{otf}
-  \usepackage[haranoaji,unicode]{pxchfon}
-  \setminchofont{BIZ_UDMincho_Regular.5.ttf}
-  \setgothicfont{BIZ_UDGothic_Regular.5.ttf}
-  \setboldgothicfont{BIZ_UDGothic_Bold.5.ttf}
-
+  \RequirePackage{mathtools}
 
 \else\ifluatex
-  % turn compression off for pdfs
-  \RequirePackage{expl3}
-  \ExplSyntaxOn
-  \pdf_uncompress:
-  \ExplSyntaxOff
-
   % FOR LuaLaTeX %%%%%%%%%%
-  \DeclareOption*{%
-    \edef\@clsopts{{lualatex,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}}
-    \expandafter\PassOptionsToClass\@clsopts
-  }
-  \ProcessOptions\relax
+  % process global options
+  \PrepareGlobalOptions{lualatex}
 
-  \edef\@ClassOptionsToAppend{{,\my@language,lualatex}}
-  \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
-
-  \edef\@tmp{{\@classoptionslist}}
-  \expandafter\newcommand\expandafter\showclsopts\@tmp
-
+  % actually load the class
   \LoadClass[%
     lualatex,%
     \my@papersize,%
@@ -86,52 +61,8 @@
     \my@fontsize,%
     ]{\my@documentclass}
 
-  % font settings
-  \RequirePackage[haranoaji,deluxe,nfssonly,jis2004]{luatexja-preset}
-  \RequirePackage{luatexja-fontspec}
-  \RequirePackage{fontspec}
+  \RequirePackage[jis2004]{luatexja}
   \renewcommand{\kanjifamilydefault}{\gtdefault}% 既定をゴシック体に
-
-  \setmainjfont[
-    % Script=Default,
-    YokoFeatures={JFM=prop},
-    % CharacterWidth=Proportional,
-    ItalicFont={BIZ UDPMincho},
-    ItalicFeatures={FakeSlant=0.3},
-    SlantedFeatures={FakeSlant=-0.3},
-    AutoFakeBold=2,
-    % Kerning=On,
-  ]{BIZ UDPMincho}
-
-  \setmainfont[
-    % CharacterWidth=Proportional,
-    Kerning=On,
-    Ligatures={Rare,TeX}
-  ]{TeX Gyre Termes}
-
-  \setsansjfont[
-    %Script=Default,
-    YokoFeatures={JFM=prop},
-    CharacterWidth=Proportional,
-    ItalicFont={BIZ UDPGothic},
-    ItalicFeatures={FakeSlant=0.3},
-    SlantedFeatures={FakeSlant=-0.3},
-    AutoFakeBold=2,
-    % Kerning=On,
-  ]{BIZ UDPGothic}
-
-  % \setmonofont[
-  %   %Script=Default,
-  %   BoldFont={mplus-2m-bold},
-  % ]{mplus-2m-regular}
-  % \setmonojfont[
-  %   %Script=Default,
-  %   BoldFont={mplus-2m-bold},
-  % ]{mplus-2m-regular}
-  \setmonofont[
-  ]{Noto Sans Mono}
-  \setmonojfont[
-  ]{Noto Sans Mono CJK JP}
 
 \else
   \errmessage{You Need either (u)pLaTeX or LuaLaTeX}
@@ -145,6 +76,7 @@
 \usetheme{Singapore}
 \usecolortheme{dove}
 \usefonttheme{professionalfonts}
+
 % \useoutertheme{infolines}
 \setbeamertemplate{footline}[text line]{%
   \parbox{\linewidth}{%
@@ -171,10 +103,13 @@
 \end{tabular}
   \vfill\insertnote\vfill
 }
-% \setbeamertemplate{note page}[compress]
+
+\setbeamertemplate{navigation symbols}{} % turn off navigation symbols
 \setbeamertemplate{itemize item}[triangle]
 \setbeamertemplate{itemize subitem}[square]
 \setbeamertemplate{itemize subsubitem}[circle]
+
+\setbeamerfont{caption}{size=\scriptsize}
 
 % \RequirePackage[left=23mm,right=23mm,top=25mm,bottom=25mm]{geometry} % 余白の設定
 % \setlength\floatsep{1 truemm}      % 図と図の間のスペース
