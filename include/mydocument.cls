@@ -10,8 +10,9 @@
 \def\my@documentclass{jlreq} % actual documentclass to use
 \def\my@fontsize{10.5 pt} % fontsize
 \def\my@draftmode{} % set this to draft for draft
+\def\my@options{}
 % \def\my@options{article,japanese}
-\def\my@options{japanese}
+% \def\my@options{japanese}
 
 \DeclareRobustCommand{\PrepareGlobalOptions}[1]{
   \DeclareOption*{%

@@ -22,9 +22,9 @@ $lualatex = "lualatex $my_latex_args %O %S";
 $latex   =  "uplatex  $my_latex_args %O %S";
 
 # use dvipdfmx as dvipdf
-$dvipdf  = 'dvipdfmx %O -o %D %S -z 0';
+$dvipdf  = 'dvipdfmx %O -o %D %S -z 9';
 
 #3 for platex, 4 for lualatex, 5 for xetex
-$pdf_mode = 4;
+$pdf_mode = 3;
 
 $postscript_mode = $dvi_mode = 0;
