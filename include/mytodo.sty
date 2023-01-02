@@ -1,0 +1,14 @@
+\usepackage{xcolor}
+\usepackage{marginnote}
+
+\newcommand{\mytodo}[1]{
+  \marginnote{\fcolorbox{red}{yellow}{\parbox{\marginparwidth}{%
+    #1
+  }}}
+}
+
+\newcommand{\footodo}[1]{
+  \footnote{\fcolorbox{red}{yellow}{\parbox{\textwidth}{%
+    #1
+  }}}
+}

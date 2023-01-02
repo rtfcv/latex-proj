@@ -5,7 +5,6 @@
 
 % common parameters
 \def\my@papersize{a4paper} % Define papersize
-\def\my@language{japanese} % Define language
 \def\my@documentclass{jlreq} % actual documentclass to use
 \def\my@fontsize{10.5 pt} % fontsize
 \def\my@draftmode{} % set this to draft for draft
@@ -16,13 +15,13 @@
 \DeclareRobustCommand{\PrepareGlobalOptions}[1]{
   \DeclareOption*{%
     \edef\@clsopts{%
-      {#1,\my@language,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}%
+      {#1,\my@fontsize,\my@papersize,\CurrentOption}{\my@documentclass}%
       }%
     \expandafter\PassOptionsToClass\@clsopts%
   }
   \ProcessOptions\relax
 
-  \edef\@ClassOptionsToAppend{{,\my@language,#1}}
+  \edef\@ClassOptionsToAppend{{,#1}}
   \expandafter\g@addto@macro\expandafter\@classoptionslist\@ClassOptionsToAppend
   }
 
@@ -35,7 +34,6 @@
   \LoadClass[%
     dvipdfmx,%
     \my@papersize,%
-    \my@language,%
     \my@draftmode,%
     \my@options,%
     fontsize=\my@fontsize,%
@@ -55,7 +53,6 @@
   \LoadClass[%
     lualatex,%
     \my@papersize,%
-    \my@language,%
     \my@draftmode,%
     \my@options,%
     fontsize=\my@fontsize,%
